@@ -1,14 +1,15 @@
-import { ProductCategory, CATEGORY_LABELS, CATEGORY_ICONS } from '@/types/inventory';
+import { Category } from '@/types/category';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
 interface CategoryFilterProps {
-  selected: ProductCategory | 'all';
-  onSelect: (category: ProductCategory | 'all') => void;
-  counts: Record<ProductCategory, number>;
+  selected: string | 'all';
+  onSelect: (category: string | 'all') => void;
+  counts: Record<string, number>;
+  categories: Category[];
 }
 
-export function CategoryFilter({ selected, onSelect, counts }: CategoryFilterProps) {
+export function CategoryFilter({ selected, onSelect, counts, categories }: CategoryFilterProps) {
   const totalCount = Object.values(counts).reduce((sum, count) => sum + count, 0);
 
   return (
@@ -30,22 +31,22 @@ export function CategoryFilter({ selected, onSelect, counts }: CategoryFilterPro
         </span>
       </Button>
       
-      {(Object.keys(CATEGORY_LABELS) as ProductCategory[]).map((category) => {
-        const count = counts[category] || 0;
+      {categories.map((category) => {
+        const count = counts[category.id] || 0;
         if (count === 0) return null;
         
         return (
           <Button
-            key={category}
-            variant={selected === category ? 'default' : 'outline'}
+            key={category.id}
+            variant={selected === category.id ? 'default' : 'outline'}
             size="sm"
-            onClick={() => onSelect(category)}
+            onClick={() => onSelect(category.id)}
             className="gap-2"
           >
-            {CATEGORY_ICONS[category]} {CATEGORY_LABELS[category]}
+            {category.icon} {category.label}
             <span className={cn(
               'rounded-full px-2 py-0.5 text-xs',
-              selected === category 
+              selected === category.id 
                 ? 'bg-primary-foreground/20 text-primary-foreground' 
                 : 'bg-muted text-muted-foreground'
             )}>

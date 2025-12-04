@@ -5,12 +5,15 @@ import { DashboardView } from '@/components/views/DashboardView';
 import { InventoryView } from '@/components/views/InventoryView';
 import { AlertsView } from '@/components/views/AlertsView';
 import { SettingsView } from '@/components/views/SettingsView';
+import { CategoriesView } from '@/components/views/CategoriesView';
 import { useInventory } from '@/hooks/useInventory';
+import { useCategories } from '@/hooks/useCategories';
 import { cn } from '@/lib/utils';
 
 const viewTitles: Record<string, { title: string; subtitle: string }> = {
   dashboard: { title: 'Dashboard', subtitle: 'Overview of your inventory' },
   inventory: { title: 'Inventory', subtitle: 'Manage your product catalog' },
+  categories: { title: 'Categories', subtitle: 'Manage product categories' },
   alerts: { title: 'Stock Alerts', subtitle: 'Items requiring attention' },
   settings: { title: 'Settings', subtitle: 'Configure your preferences' },
 };
@@ -19,6 +22,13 @@ const Index = () => {
   const [currentView, setCurrentView] = useState('dashboard');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  const {
+    categories,
+    addCategory,
+    updateCategory,
+    deleteCategory,
+  } = useCategories();
 
   const {
     products,
@@ -32,7 +42,7 @@ const Index = () => {
     updateProduct,
     deleteProduct,
     updateStock,
-  } = useInventory();
+  } = useInventory(categories);
 
   const handleAddProduct = () => {
     setIsAddDialogOpen(true);
@@ -55,6 +65,16 @@ const Index = () => {
             onDeleteProduct={deleteProduct}
             isAddDialogOpen={isAddDialogOpen}
             setIsAddDialogOpen={setIsAddDialogOpen}
+            categories={categories}
+          />
+        );
+      case 'categories':
+        return (
+          <CategoriesView
+            categories={categories}
+            onAdd={addCategory}
+            onUpdate={updateCategory}
+            onDelete={deleteCategory}
           />
         );
       case 'alerts':

@@ -1,16 +1,17 @@
 import { useState, useMemo, useCallback } from 'react';
-import { Product, InventoryStats, StockAlert, ProductCategory, CATEGORY_LABELS } from '@/types/inventory';
+import { Product, InventoryStats, StockAlert } from '@/types/inventory';
+import { Category } from '@/types/category';
 import { mockProducts } from '@/data/mockProducts';
 
-export function useInventory() {
+export function useInventory(categories: Category[]) {
   const [products, setProducts] = useState<Product[]>(mockProducts);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<ProductCategory | 'all'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string | 'all'>('all');
 
   const stats: InventoryStats = useMemo(() => {
-    const categoryCounts = {} as Record<ProductCategory, number>;
-    Object.keys(CATEGORY_LABELS).forEach((cat) => {
-      categoryCounts[cat as ProductCategory] = 0;
+    const categoryCounts: Record<string, number> = {};
+    categories.forEach((cat) => {
+      categoryCounts[cat.id] = 0;
     });
 
     let totalValue = 0;
@@ -35,7 +36,7 @@ export function useInventory() {
       outOfStockCount,
       categoryCounts,
     };
-  }, [products]);
+  }, [products, categories]);
 
   const stockAlerts: StockAlert[] = useMemo(() => {
     return products

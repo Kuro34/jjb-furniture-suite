@@ -11,7 +11,7 @@ export interface Product {
   id: string;
   name: string;
   sku: string;
-  category: ProductCategory;
+  category: string; // Changed to string for dynamic categories
   description: string;
   price: number;
   costPrice: number;
@@ -42,7 +42,7 @@ export interface InventoryStats {
   totalValue: number;
   lowStockCount: number;
   outOfStockCount: number;
-  categoryCounts: Record<ProductCategory, number>;
+  categoryCounts: Record<string, number>;
 }
 
 export const CATEGORY_LABELS: Record<ProductCategory, string> = {

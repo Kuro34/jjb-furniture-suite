@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Product, ProductCategory, InventoryStats } from '@/types/inventory';
+import { Product, InventoryStats } from '@/types/inventory';
+import { Category } from '@/types/category';
 import { ProductCard } from '@/components/inventory/ProductCard';
 import { CategoryFilter } from '@/components/inventory/CategoryFilter';
 import { AddProductDialog } from '@/components/inventory/AddProductDialog';
@@ -19,14 +20,15 @@ import { toast } from 'sonner';
 interface InventoryViewProps {
   products: Product[];
   stats: InventoryStats;
-  selectedCategory: ProductCategory | 'all';
-  onCategoryChange: (category: ProductCategory | 'all') => void;
+  selectedCategory: string | 'all';
+  onCategoryChange: (category: string | 'all') => void;
   onUpdateStock: (id: string, quantity: number) => void;
   onAddProduct: (product: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => void;
   onUpdateProduct: (id: string, updates: Partial<Product>) => void;
   onDeleteProduct: (id: string) => void;
   isAddDialogOpen: boolean;
   setIsAddDialogOpen: (open: boolean) => void;
+  categories: Category[];
 }
 
 export function InventoryView({
@@ -40,6 +42,7 @@ export function InventoryView({
   onDeleteProduct,
   isAddDialogOpen,
   setIsAddDialogOpen,
+  categories,
 }: InventoryViewProps) {
   const [editProduct, setEditProduct] = useState<Product | null>(null);
   const [deleteProductId, setDeleteProductId] = useState<string | null>(null);
@@ -75,6 +78,7 @@ export function InventoryView({
         selected={selectedCategory}
         onSelect={onCategoryChange}
         counts={stats.categoryCounts}
+        categories={categories}
       />
 
       {/* Products Grid */}
@@ -114,6 +118,7 @@ export function InventoryView({
         onAdd={onAddProduct}
         editProduct={editProduct}
         onUpdate={onUpdateProduct}
+        categories={categories}
       />
 
       {/* Delete Confirmation */}
