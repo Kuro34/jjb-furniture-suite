@@ -8,6 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Armchair,
+  Tags,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -19,6 +20,7 @@ interface SidebarProps {
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'inventory', label: 'Inventory', icon: Package },
+  { id: 'categories', label: 'Categories', icon: Tags },
   { id: 'alerts', label: 'Stock Alerts', icon: AlertTriangle },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];

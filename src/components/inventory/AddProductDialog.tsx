@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Product, ProductCategory, CATEGORY_LABELS } from '@/types/inventory';
+import { useState, useEffect } from 'react';
+import { Product } from '@/types/inventory';
+import { Category } from '@/types/category';
 import {
   Dialog,
   DialogContent,
@@ -19,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { ImageUpload } from '@/components/inventory/ImageUpload';
 import { toast } from 'sonner';
 
 interface AddProductDialogProps {
@@ -27,12 +29,13 @@ interface AddProductDialogProps {
   onAdd: (product: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => void;
   editProduct?: Product | null;
   onUpdate?: (id: string, updates: Partial<Product>) => void;
+  categories: Category[];
 }
 
-const initialFormData = {
+const getInitialFormData = (defaultCategory: string) => ({
   name: '',
   sku: '',
-  category: 'sofa' as ProductCategory,
+  category: defaultCategory,
   description: '',
   price: 0,
   costPrice: 0,
@@ -42,31 +45,41 @@ const initialFormData = {
   dimensions: { width: 0, height: 0, depth: 0 },
   material: '',
   color: '',
-};
+});
 
 export function AddProductDialog({ 
   open, 
   onOpenChange, 
   onAdd,
   editProduct,
-  onUpdate 
+  onUpdate,
+  categories,
 }: AddProductDialogProps) {
-  const [formData, setFormData] = useState(editProduct ? {
-    name: editProduct.name,
-    sku: editProduct.sku,
-    category: editProduct.category,
-    description: editProduct.description,
-    price: editProduct.price,
-    costPrice: editProduct.costPrice,
-    stockQuantity: editProduct.stockQuantity,
-    minStockLevel: editProduct.minStockLevel,
-    imageUrl: editProduct.imageUrl || '',
-    dimensions: editProduct.dimensions,
-    material: editProduct.material,
-    color: editProduct.color,
-  } : initialFormData);
+  const defaultCategory = categories[0]?.id || 'sofa';
+  const [formData, setFormData] = useState(getInitialFormData(defaultCategory));
 
   const isEditing = !!editProduct;
+
+  useEffect(() => {
+    if (editProduct) {
+      setFormData({
+        name: editProduct.name,
+        sku: editProduct.sku,
+        category: editProduct.category,
+        description: editProduct.description,
+        price: editProduct.price,
+        costPrice: editProduct.costPrice,
+        stockQuantity: editProduct.stockQuantity,
+        minStockLevel: editProduct.minStockLevel,
+        imageUrl: editProduct.imageUrl || '',
+        dimensions: editProduct.dimensions,
+        material: editProduct.material,
+        color: editProduct.color,
+      });
+    } else {
+      setFormData(getInitialFormData(defaultCategory));
+    }
+  }, [editProduct, defaultCategory]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,12 +97,12 @@ export function AddProductDialog({
       toast.success('Product added successfully');
     }
     
-    setFormData(initialFormData);
+    setFormData(getInitialFormData(defaultCategory));
     onOpenChange(false);
   };
 
   const handleClose = () => {
-    setFormData(initialFormData);
+    setFormData(getInitialFormData(defaultCategory));
     onOpenChange(false);
   };
 
@@ -139,7 +152,7 @@ export function AddProductDialog({
               <Label htmlFor="category">Category</Label>
               <Select
                 value={formData.category}
-                onValueChange={(value: ProductCategory) => 
+                onValueChange={(value: string) => 
                   setFormData({ ...formData, category: value })
                 }
               >
@@ -147,9 +160,9 @@ export function AddProductDialog({
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
-                  {(Object.keys(CATEGORY_LABELS) as ProductCategory[]).map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {CATEGORY_LABELS[cat]}
+                  {categories.map((cat) => (
+                    <SelectItem key={cat.id} value={cat.id}>
+                      {cat.icon} {cat.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -282,16 +295,10 @@ export function AddProductDialog({
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="imageUrl">Image URL</Label>
-              <Input
-                id="imageUrl"
-                type="url"
-                placeholder="https://..."
-                value={formData.imageUrl}
-                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-              />
-            </div>
+            <ImageUpload
+              value={formData.imageUrl}
+              onChange={(url) => setFormData({ ...formData, imageUrl: url })}
+            />
           </div>
 
           <DialogFooter>
