@@ -40,19 +40,19 @@ export function StatCard({
   return (
     <div 
       className={cn(
-        'rounded-xl border p-6 shadow-furniture-sm transition-all duration-300 hover:shadow-furniture-md animate-slide-up',
+        'rounded-xl border p-4 md:p-6 shadow-furniture-sm transition-all duration-300 hover:shadow-furniture-md animate-slide-up',
         variants[variant]
       )}
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="flex items-start justify-between">
-        <div>
-          <p className="text-sm font-medium text-muted-foreground">{title}</p>
-          <p className="mt-2 font-display text-3xl font-semibold text-foreground">
+        <div className="min-w-0 flex-1">
+          <p className="text-xs md:text-sm font-medium text-muted-foreground truncate">{title}</p>
+          <p className="mt-1 md:mt-2 font-display text-xl md:text-3xl font-semibold text-foreground truncate">
             {value}
           </p>
           {subtitle && (
-            <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
+            <p className="mt-1 text-xs md:text-sm text-muted-foreground hidden sm:block">{subtitle}</p>
           )}
           {trend && (
             <p className={cn(
@@ -64,10 +64,10 @@ export function StatCard({
           )}
         </div>
         <div className={cn(
-          'rounded-lg p-3',
+          'rounded-lg p-2 md:p-3 flex-shrink-0',
           iconVariants[variant]
         )}>
-          <Icon className="h-6 w-6" />
+          <Icon className="h-4 w-4 md:h-6 md:w-6" />
         </div>
       </div>
     </div>

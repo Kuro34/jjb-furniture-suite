@@ -22,6 +22,7 @@ const Index = () => {
   const [currentView, setCurrentView] = useState('dashboard');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const {
     categories,
@@ -88,11 +89,19 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Sidebar currentView={currentView} onViewChange={setCurrentView} />
+      <Sidebar 
+        currentView={currentView} 
+        onViewChange={setCurrentView}
+        collapsed={sidebarCollapsed}
+        onCollapsedChange={setSidebarCollapsed}
+        mobileOpen={mobileMenuOpen}
+        onMobileOpenChange={setMobileMenuOpen}
+      />
       
       <main className={cn(
         'transition-all duration-300',
-        'ml-64' // Default sidebar width, will be handled by sidebar state
+        'md:ml-64', // Default sidebar width on desktop
+        sidebarCollapsed && 'md:ml-20' // Collapsed sidebar width
       )}>
         <Header
           title={viewTitles[currentView]?.title || 'Dashboard'}
@@ -101,6 +110,7 @@ const Index = () => {
           onSearchChange={setSearchQuery}
           alertCount={stockAlerts.length}
           onAddProduct={handleAddProduct}
+          onMobileMenuOpen={() => setMobileMenuOpen(true)}
         />
         
         {renderView()}

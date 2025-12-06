@@ -15,7 +15,7 @@ export function AlertsView({ alerts, onNavigateToProduct }: AlertsViewProps) {
 
   if (alerts.length === 0) {
     return (
-      <div className="p-6">
+      <div className="p-4 md:p-6">
         <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-success/30 bg-success/5 py-16">
           <div className="rounded-full bg-success/10 p-4">
             <AlertCircle className="h-10 w-10 text-success" />
@@ -33,10 +33,10 @@ export function AlertsView({ alerts, onNavigateToProduct }: AlertsViewProps) {
   }
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-4 md:space-y-6 p-4 md:p-6">
       {/* Summary */}
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-6 animate-slide-up">
+      <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2">
+        <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-4 md:p-6 animate-slide-up">
           <div className="flex items-center gap-3">
             <div className="rounded-lg bg-destructive/10 p-2">
               <AlertTriangle className="h-5 w-5 text-destructive" />
@@ -50,7 +50,7 @@ export function AlertsView({ alerts, onNavigateToProduct }: AlertsViewProps) {
           </div>
         </div>
 
-        <div className="rounded-xl border border-warning/20 bg-warning/5 p-6 animate-slide-up" style={{ animationDelay: '50ms' }}>
+        <div className="rounded-xl border border-warning/20 bg-warning/5 p-4 md:p-6 animate-slide-up" style={{ animationDelay: '50ms' }}>
           <div className="flex items-center gap-3">
             <div className="rounded-lg bg-warning/10 p-2">
               <AlertCircle className="h-5 w-5 text-warning" />
@@ -120,7 +120,7 @@ function AlertRow({
   return (
     <div 
       className={cn(
-        'flex items-center gap-4 rounded-lg border p-4 transition-all duration-200 hover:shadow-furniture-sm animate-fade-in',
+        'flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 rounded-lg border p-3 md:p-4 transition-all duration-200 hover:shadow-furniture-sm animate-fade-in',
         alert.severity === 'critical'
           ? 'border-destructive/20 bg-card'
           : 'border-warning/20 bg-card'
@@ -153,7 +153,7 @@ function AlertRow({
         variant="outline" 
         size="sm"
         onClick={() => onNavigate?.(alert.productId)}
-        className="gap-1"
+        className="gap-1 w-full sm:w-auto"
       >
         View
         <ArrowRight className="h-3 w-3" />

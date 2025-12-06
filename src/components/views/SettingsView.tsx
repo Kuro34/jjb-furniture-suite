@@ -7,7 +7,7 @@ import { Building2, Bell, Database, Shield } from 'lucide-react';
 
 export function SettingsView() {
   return (
-    <div className="max-w-2xl space-y-8 p-6">
+    <div className="max-w-2xl space-y-6 md:space-y-8 p-4 md:p-6">
       {/* Business Info */}
       <section className="space-y-4 animate-slide-up">
         <div className="flex items-center gap-3">
@@ -24,7 +24,7 @@ export function SettingsView() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-6 space-y-4">
+        <div className="rounded-xl border border-border bg-card p-4 md:p-6 space-y-4">
           <div className="space-y-2">
             <Label htmlFor="businessName">Business Name</Label>
             <Input id="businessName" defaultValue="JJB Furniture" />
@@ -64,7 +64,7 @@ export function SettingsView() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-6 space-y-4">
+        <div className="rounded-xl border border-border bg-card p-4 md:p-6 space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="font-medium text-foreground">Low Stock Alerts</p>
@@ -115,7 +115,7 @@ export function SettingsView() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-6 space-y-4">
+        <div className="rounded-xl border border-border bg-card p-4 md:p-6 space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="font-medium text-foreground">Export Inventory</p>
@@ -142,7 +142,7 @@ export function SettingsView() {
 
       {/* Security Notice */}
       <section className="animate-slide-up" style={{ animationDelay: '150ms' }}>
-        <div className="rounded-xl border border-primary/20 bg-primary/5 p-6">
+        <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 md:p-6">
           <div className="flex items-start gap-3">
             <div className="rounded-lg bg-primary/10 p-2">
               <Shield className="h-5 w-5 text-primary" />

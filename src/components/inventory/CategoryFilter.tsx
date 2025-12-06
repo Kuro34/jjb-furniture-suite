@@ -13,7 +13,7 @@ export function CategoryFilter({ selected, onSelect, counts, categories }: Categ
   const totalCount = Object.values(counts).reduce((sum, count) => sum + count, 0);
 
   return (
-    <div className="flex flex-wrap gap-2 animate-fade-in">
+    <div className="flex flex-wrap gap-2 animate-fade-in overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0">
       <Button
         variant={selected === 'all' ? 'default' : 'outline'}
         size="sm"
