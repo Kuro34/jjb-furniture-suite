@@ -20,19 +20,19 @@ export function DashboardView({ stats, alerts }: DashboardViewProps) {
   };
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-4 md:space-y-6 p-4 md:p-6">
       {/* Welcome Section */}
       <div className="animate-fade-in">
-        <h1 className="font-display text-2xl font-semibold text-foreground">
+        <h1 className="font-display text-xl md:text-2xl font-semibold text-foreground">
           Welcome back
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-sm md:text-base text-muted-foreground">
           Here's what's happening with your inventory today.
         </p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 md:gap-4 grid-cols-2 lg:grid-cols-4">
         <StatCard
           title="Total Products"
           value={stats.totalProducts}
@@ -67,7 +67,7 @@ export function DashboardView({ stats, alerts }: DashboardViewProps) {
       </div>
 
       {/* Charts & Alerts */}
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 md:gap-6 lg:grid-cols-2">
         <CategoryChart data={stats.categoryCounts} />
         <StockAlertsList alerts={alerts} />
       </div>

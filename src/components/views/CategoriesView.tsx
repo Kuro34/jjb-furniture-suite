@@ -78,19 +78,19 @@ export function CategoriesView({ categories, onAdd, onUpdate, onDelete }: Catego
   };
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 md:space-y-6 p-4 md:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="font-display text-2xl font-semibold text-foreground">Categories</h2>
+          <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground">Categories</h2>
           <p className="text-sm text-muted-foreground">Manage product categories</p>
         </div>
-        <Button onClick={() => handleOpenDialog()} className="gap-2">
+        <Button onClick={() => handleOpenDialog()} className="gap-2 w-full sm:w-auto">
           <Plus className="h-4 w-4" />
           Add Category
         </Button>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {categories.map((category, index) => (
           <Card
             key={category.id}
@@ -98,11 +98,11 @@ export function CategoriesView({ categories, onAdd, onUpdate, onDelete }: Catego
             style={{ animationDelay: `${index * 50}ms` }}
           >
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">{category.icon}</span>
-                <CardTitle className="text-base font-medium">{category.label}</CardTitle>
+              <div className="flex items-center gap-3 min-w-0">
+                <span className="text-xl md:text-2xl">{category.icon}</span>
+                <CardTitle className="text-sm md:text-base font-medium truncate">{category.label}</CardTitle>
               </div>
-              <div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+              <div className="flex gap-1 sm:opacity-0 transition-opacity sm:group-hover:opacity-100">
                 <Button
                   variant="ghost"
                   size="icon"

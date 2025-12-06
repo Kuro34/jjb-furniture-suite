@@ -72,7 +72,7 @@ export function InventoryView({
   };
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-4 md:space-y-6 p-4 md:p-6">
       {/* Category Filter */}
       <CategoryFilter
         selected={selectedCategory}
@@ -97,7 +97,7 @@ export function InventoryView({
           </p>
         </div>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((product, index) => (
             <ProductCard
               key={product.id}
